@@ -70,21 +70,12 @@ for c in count.split("\n"):
     value = int(c.split("：")[-1])
     count_dict[key] = value
 
-# count_dict["現在時刻"] = datetime.datetime.today().strftime("%Y-%m-%d %H:%M")
-# colnam = list(count_dict.keys())
-
-# tmp = pd.DataFrame.from_dict([count_dict])
-# tmp = tmp.set_index("現在時刻")
 current_count = count_dict["健身中心現在人數"]
 capacity_full = count_dict["健身中心最大乘載人數"]
 
 current_count_swim = count_dict["室內游泳池現在人數"]
 capacity_full_swim = count_dict["室內游泳池最大乘載人數"]
-# Save file
-# tmp.to_csv(f"{base_path}NTU_GYM_Counter_tmp.csv")
 
-
-# An overlapped dataframe constructed from dictionary
 # build dictionary
 count_dict = {}
 count_dict["current_count"] = current_count
@@ -120,21 +111,9 @@ df.to_csv(f"{base_path}NTU_GYM_Counter.csv")
 
 # Data Cleaning for better plot
 df = pd.read_csv(f"{base_path}NTU_GYM_Counter.csv")
+
 # Get the 15-minute time interval
 # build a dictionary that indicates which time interval a row is in
-
-# ```python
-# time_interval_dict = {
-#     0 : "T0",
-#     15 : "T1",
-#     30 : "T2",
-#     .
-#     .
-#     .
-#     2400 : "T160"
-# }
-# ```
-
 time_interval_dict = {x : f"{x*15//60}:{x*15%60}" for x in range(0,97)}
 def findTimeInterval(date): 
     t_hour = datetime.datetime.strptime(date, '%Y-%m-%d %H:%M').hour
@@ -207,7 +186,7 @@ print(uploaded_image.link)
 print(uploaded_image.type)
 
 key = 'current_count'
-sendNotification(text = f"\n資料抓取時刻：{count_dict['Timestamp']}\n{key} : {count_dict[key]}", 
+sendNotification(text = f"\n台大新體健身房\n資料抓取時刻：\n{count_dict['Timestamp']}\n{key} : {count_dict[key]}人\n人數上限：{count_dict['capacity_fulll']}人\n容留比例：{count_dict['capacity_ratio']}\n現在氣溫：攝氏{count_dict['temp']}\n體感溫度：攝氏{count_dict['temp_feel']}\n現在濕度：{count_dict['humidity']}%\n現在氣壓：{count_dict['pressure']}帕", 
                  img_url = uploaded_image.link,
                  token = token)
 
