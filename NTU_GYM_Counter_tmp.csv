@@ -1,2 +1,2 @@
-現在時刻,健身中心現在人數,健身中心最適人數,健身中心最大乘載人數,室內游泳池現在人數,室內游泳池最適人數,室內游泳池最大乘載人數
-2021-03-03 16:10,80,82,111,34,42,70
+Timestamp,current_count,capacity_fulll,capacity_ratio,current_count_swim,capacity_full_swim,temp,temp_feel,temp_min,temp_max,pressure,humidity
+2022-09-06 11:08,63,161,0.391304347826087,5,130,27.21,29.12,25.58,30.04,1011,69

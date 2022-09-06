@@ -7,17 +7,10 @@
 import requests
 from bs4 import BeautifulSoup
 from selenium import webdriver
-# from selenium.webdriver.support.ui import WebDriverWait
-# from selenium.webdriver.common.keys import Keys
-# from selenium.webdriver.support.ui import Select
 import pandas as pd
-# import numpy as np
 import time
-# import re
 import datetime
-# import sqlite3 as lite
 import os
-# import random
 import calendar
 import matplotlib
 matplotlib.use('Agg')
@@ -26,7 +19,7 @@ import matplotlib.ticker as ticker
 import pyimgur
 
 # import credentials
-from config import CLIENT_ID, token
+from config import CLIENT_ID, token, weather_url
 
 
 # Set up working directory
@@ -63,6 +56,7 @@ driver = webdriver.Chrome('/usr/lib/chromium-browser/chromedriver', chrome_optio
 
 
 # 健身中心人數
+# a dataframe with raw data
 driver.get(url)
 soup = BeautifulSoup(driver.page_source, 'lxml')
 count = soup.select("#home_index > div.allinbg > div.allin > div.condis > div > div > div:nth-child(1) > div:nth-child(2) > div:nth-child(2)")[0].text
@@ -76,21 +70,51 @@ for c in count.split("\n"):
     value = int(c.split("：")[-1])
     count_dict[key] = value
 
-count_dict["現在時刻"] = datetime.datetime.today().strftime("%Y-%m-%d %H:%M")
+# count_dict["現在時刻"] = datetime.datetime.today().strftime("%Y-%m-%d %H:%M")
+# colnam = list(count_dict.keys())
+
+# tmp = pd.DataFrame.from_dict([count_dict])
+# tmp = tmp.set_index("現在時刻")
+current_count = count_dict["健身中心現在人數"]
+capacity_full = count_dict["健身中心最大乘載人數"]
+
+current_count_swim = count_dict["室內游泳池現在人數"]
+capacity_full_swim = count_dict["室內游泳池最大乘載人數"]
+# Save file
+# tmp.to_csv(f"{base_path}NTU_GYM_Counter_tmp.csv")
+
+
+# An overlapped dataframe constructed from dictionary
+# build dictionary
+count_dict = {}
+count_dict["current_count"] = current_count
+count_dict["capacity_fulll"] = capacity_full
+count_dict["capacity_ratio"] = current_count / capacity_full
+count_dict["current_count_swim"] = current_count_swim
+count_dict["capacity_full_swim"] = capacity_full_swim
+count_dict["Timestamp"] = datetime.datetime.today().strftime("%Y-%m-%d %H:%M")
+
+# attach weather info
+res = requests.get(weather_url)
+weather_res = res.json()
+count_dict["temp"] = weather_res["main"]["temp"]
+count_dict["temp_feel"] = weather_res["main"]["feels_like"]
+count_dict["temp_min"] = weather_res["main"]["temp_min"]
+count_dict["temp_max"] = weather_res["main"]["temp_max"]
+count_dict["pressure"] = weather_res["main"]["pressure"]
+count_dict["humidity"] = weather_res["main"]["humidity"]
 colnam = list(count_dict.keys())
 
+# build dataframe
 tmp = pd.DataFrame.from_dict([count_dict])
-tmp = tmp.set_index("現在時刻")
-
-# Save file
+tmp = tmp.set_index("Timestamp")
 tmp.to_csv(f"{base_path}NTU_GYM_Counter_tmp.csv")
 
 
-
 ## Loading Database and Updating
-df = pd.read_csv(f"{base_path}NTU_GYM_Counter.csv", index_col="現在時刻")
+df = pd.read_csv(f"{base_path}NTU_GYM_Counter.csv", index_col="Timestamp")
 df = df.append(tmp)
-df = df.sort_values(by = "現在時刻", ascending = False)
+df = df.sort_values(by = "Timestamp", ascending = False)
 # Saving
 df.to_csv(f"{base_path}NTU_GYM_Counter.csv")
 
@@ -148,7 +172,7 @@ df_wk2day = df_wk2day.groupby("TimeInterval").mean()
 
 # preparing for plots
 x = [time_interval_dict[key] for key in list(df_wk2day.index)]
-y = df_wk2day['健身中心現在人數']
+y = df_wk2day['current_count']
 
 tick_spacing = 8
 fig, ax = plt.subplots(1,1)
@@ -182,8 +206,8 @@ print(uploaded_image.title)
 print(uploaded_image.link)
 print(uploaded_image.type)
 
-key = '健身中心現在人數'
-sendNotification(text = f"\n資料抓取時刻：{count_dict['現在時刻']}\n{key} : {count_dict[key]}", 
+key = 'current_count'
+sendNotification(text = f"\n資料抓取時刻：{count_dict['Timestamp']}\n{key} : {count_dict[key]}", 
                  img_url = uploaded_image.link,
                  token = token)
 
