@@ -23,6 +23,7 @@ from config import CLIENT_ID, token, weather_url
 
 
 # Set up working directory
+os.chdir("/home/rpi/repo/NTU_GymCrowdMeter/")
 cwd = os.getcwd()
 base_path = cwd + "/"
 

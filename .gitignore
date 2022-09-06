@@ -1,7 +1,8 @@
 *.ipynb_checkpoints
 *.Rhistory
 config.py
-
+plot/*
+*tmp.csv
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
