@@ -17,6 +17,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 import pyimgur
+import json
 
 # import credentials
 from config import CLIENT_ID, token, weather_url
@@ -32,50 +33,14 @@ os.environ['TZ'] = 'Asia/Taipei'
 time.tzset()
 
 # Web scraping
-url = "https://ntusportscenter.ntu.edu.tw"
-
-# Open Browser and open udn library #打開瀏覽器，但不要載入圖片
-options = webdriver.ChromeOptions()
-prefs = {
-    'profile.default_content_setting_values': {
-        'images': 2,
-        #'javascript': 2
-    }
-}
-options.add_experimental_option('prefs', prefs)
-
-## 偽裝header
-user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15"
-options.add_argument('--user-agent=%s' % user_agent)
-## 防止 javascript detect selenium
-options.add_experimental_option('excludeSwitches', ['enable-automation'])
-## headless
-options.add_argument('-headless')
-
-global driver
-driver = webdriver.Chrome('/usr/lib/chromium-browser/chromedriver', chrome_options=options)
-
-
-# 健身中心人數
-# a dataframe with raw data
-driver.get(url)
-soup = BeautifulSoup(driver.page_source, 'lxml')
-count = soup.select("#home_index > div.allinbg > div.allin > div.condis > div > div > div:nth-child(1) > div:nth-child(2) > div:nth-child(2)")[0].text
-
-count_dict = {}
-for c in count.split("\n"):
-    c = c.strip()
-    if len(c)==0:
-        continue
-    key = c.split("：")[0]
-    value = int(c.split("：")[-1])
-    count_dict[key] = value
-
-current_count = count_dict["健身中心現在人數"]
-capacity_full = count_dict["健身中心最大乘載人數"]
-
-current_count_swim = count_dict["室內游泳池現在人數"]
-capacity_full_swim = count_dict["室內游泳池最大乘載人數"]
+url = 'https://ntusportscenter.ntu.edu.tw/counter.txt'
+res = requests.get(url)
+count_dict = json.loads(res.text)
+count_dict = count_dict["CounterData"][0]
+current_count = int(count_dict['innerCount'].split(";")[0])
+current_count_swim = int(count_dict['innerCount'].split(";")[1])
+capacity_full = int(count_dict['permitNum'].split(";")[0])
+capacity_full_swim = int(count_dict['permitNum'].split(";")[1])
 
 # build dictionary
 count_dict = {}
