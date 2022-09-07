@@ -1,5 +1,6 @@
 *.ipynb_checkpoints
 *.Rhistory
+.RData
 config.py
 plot/*
 *tmp.csv
