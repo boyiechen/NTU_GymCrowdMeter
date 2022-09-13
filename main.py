@@ -43,6 +43,7 @@ capacity_full = int(count_dict['permitNum'].split(";")[0])
 capacity_full_swim = int(count_dict['permitNum'].split(";")[1])
 
 # build dictionary
+now = datetime.datetime.today()
 count_dict = {}
 count_dict["current_count"] = current_count
 count_dict["capacity_fulll"] = capacity_full
@@ -141,17 +142,18 @@ def sendNotification(text = "", img_url = "", token = ""):
     print("發送Line通知囉！")
     time.sleep(1)
 
-# Set up Imgur credentials
-PATH = f"{base_path}plot/plot.png" #A Filepath to an image on your computer"
-title = "Uploaded with PyImgur"
+if now.minute % 30 == 0:
+    # Set up Imgur credentials
+    PATH = f"{base_path}plot/plot.png" #A Filepath to an image on your computer"
+    title = "Uploaded with PyImgur"
 
-im = pyimgur.Imgur(CLIENT_ID)
-uploaded_image = im.upload_image(PATH, title=title)
-print(uploaded_image.title)
-print(uploaded_image.link)
-print(uploaded_image.type)
+    im = pyimgur.Imgur(CLIENT_ID)
+    uploaded_image = im.upload_image(PATH, title=title)
+    print(uploaded_image.title)
+    print(uploaded_image.link)
+    print(uploaded_image.type)
 
-key = 'current_count'
-sendNotification(text = f"\n台大新體健身房\n資料抓取時刻：\n{count_dict['Timestamp']}\n{key} : {count_dict[key]}人\n人數上限：{count_dict['capacity_fulll']}人\n容留比例：{count_dict['capacity_ratio']}\n現在氣溫：攝氏{count_dict['temp']}\n體感溫度：攝氏{count_dict['temp_feel']}\n現在濕度：{count_dict['humidity']}%\n現在氣壓：{count_dict['pressure']}帕", 
-                 img_url = uploaded_image.link,
-                 token = token)
+    key = 'current_count'
+    sendNotification(text = f"\n台大新體健身房\n資料抓取時刻：\n{count_dict['Timestamp']}\n{key} : {count_dict[key]}人\n人數上限：{count_dict['capacity_fulll']}人\n容留比例：{count_dict['capacity_ratio']}\n現在氣溫：攝氏{count_dict['temp']}\n體感溫度：攝氏{count_dict['temp_feel']}\n現在濕度：{count_dict['humidity']}%\n現在氣壓：{count_dict['pressure']}帕", 
+                    img_url = uploaded_image.link,
+                    token = token)
