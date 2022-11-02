@@ -11,6 +11,7 @@ import pandas as pd
 import time
 import datetime
 import os
+import sys
 import calendar
 import matplotlib
 matplotlib.use('Agg')
@@ -67,6 +68,10 @@ colnam = list(count_dict.keys())
 tmp = pd.DataFrame.from_dict([count_dict])
 tmp = tmp.set_index("Timestamp")
 tmp.to_csv(f"{base_path}NTU_GYM_Counter_tmp.csv")
+# if there is no available new data, then stop running
+if tmp.shape[0] == 0:
+    print("NO DATA, EXIT PROGRAM")
+    sys.exit()
 
 
 ## Loading Database and Updating
