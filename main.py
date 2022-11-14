@@ -51,7 +51,7 @@ analysis = Analyzer()
 df_wk2day = analysis.filterWeekDayDF()
 ## create plot
 analysis.makeWeekDayPlot(df_wk2day, base_path)
-analysis.uploadImg(base_path, scraper)
+#analysis.uploadImg(base_path, scraper)
 
 ## if it is a new hour, then send notification
 if now.minute % 60 == 0:
