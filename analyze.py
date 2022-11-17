@@ -98,6 +98,6 @@ class Analyzer:
         print(uploaded_image.type)
 
         key = 'current_count'
-        self.sendNotification(text = f"\nUC Berkeley RSF\n資料抓取時刻：\n{scraper.count_dict['Timestamp']}\n{key} : {scraper.count_dict[key]}人\n人數上限：{scraper.count_dict['capacity_fulll']}人\n容留比例：{scraper.count_dict['capacity_ratio']}\n現在氣溫：攝氏{scraper.count_dict['temp']}\n體感溫度：攝氏{scraper.count_dict['temp_feel']}\n現在濕度：{scraper.count_dict['humidity']}%\n現在氣壓：{scraper.count_dict['pressure']}帕", 
+        self.sendNotification(text = f"\nNTU GYM\n資料抓取時刻：\n{scraper.count_dict['Timestamp']}\n{key} : {scraper.count_dict[key]}人\n人數上限：{scraper.count_dict['capacity_fulll']}人\n容留比例：{scraper.count_dict['capacity_ratio']}\n現在氣溫：攝氏{scraper.count_dict['temp']}\n體感溫度：攝氏{scraper.count_dict['temp_feel']}\n現在濕度：{scraper.count_dict['humidity']}%\n現在氣壓：{scraper.count_dict['pressure']}帕", 
                             img_url = uploaded_image.link,
                             token = token)
