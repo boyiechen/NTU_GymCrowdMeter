@@ -23,7 +23,7 @@ print(base_path)
 
 # Initialize DB connection
 db_manager = DBManager(database='./database')
-#db_manager_backup = DBManager(database='/home/pi/repo/database/NTU_GYM')
+db_manager_backup = DBManager(database='/home/rpi/repo/database/NTU_GYM')
 
 # Test the functionality of scrape new data, save in DB
 ## load old data
@@ -38,7 +38,7 @@ print(df_tmp)
 
 ## insert new data
 db_manager.insertData(df_tmp)
-#db_manager_backup.insertData(df_tmp)
+db_manager_backup.insertData(df_tmp)
 
 ## load new data
 # db_manager.showData("db", limit=10)
