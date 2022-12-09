@@ -26,7 +26,7 @@ peak_count <- df_outcome$Peak[1]
 ui <- fluidPage(    
     
     # Give the page a title
-    titlePanel("UC Berkeley RSF Instant Crowd Meter & Predictor"),
+    titlePanel("NTU GYM Instant Crowd Meter & Predictor"),
     
     # Generate a row with a sidebar
     sidebarLayout(      
