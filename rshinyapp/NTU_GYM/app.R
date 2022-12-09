@@ -7,7 +7,7 @@
 #
 rm(list = ls())
 
-Sys.setenv(TZ='US/Pacific')
+Sys.setenv(TZ='Asia/Taipei')
 library(shiny)
 library(dplyr, warn.conflicts = FALSE)
 library(ggplot2)
@@ -15,8 +15,8 @@ library(readr)
 library(lubridate)
     
 ### fetch data
-df <- read_csv("https://github.com/boyiechen/BerkeleyRSF_CrowdMeter/raw/main/rshinyapp/cleanedData.csv")
-df_outcome <- read_csv("https://github.com/boyiechen/BerkeleyRSF_CrowdMeter/raw/main/rshinyapp/reportData.csv")
+df <- read_csv("https://github.com/boyiechen/NTU_GymCrowdMeter/raw/main/rshinyapp/cleanedData.csv")
+df_outcome <- read_csv("https://github.com/boyiechen/NTU_GymCrowdMeter/raw/main/rshinyapp/reportData.csv")
 
 peak_time <- (df_outcome %>% filter(isPeak == 1) %>% select(by5))$by5
 peak_count <- df_outcome$Peak[1]
