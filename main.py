@@ -17,7 +17,7 @@ now = datetime.datetime.today()
 
 
 # Setting working directory
-os.chdir("/home/pi/repo/NTU_GymCrowdMeter/")
+os.chdir("/home/boyie/repo/NTU_GymCrowdMeter/")
 base_path = os.getcwd()
 print(base_path)
 
