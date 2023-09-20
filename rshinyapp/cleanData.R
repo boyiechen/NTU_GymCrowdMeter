@@ -16,7 +16,7 @@ library(RSQLite)
 # Set up env
 Sys.setenv(TZ='Asia/Taipei')
 #setwd("/Users/Andy 1/google_drive/Coding_Projects/RSF/repo")
-setwd("/home/pi/repo/NTU_GymCrowdMeter/")
+setwd("/home/boyie/repo/NTU_GymCrowdMeter/")
 #setwd("C:/Users/boyie/Programming/BerkeleyRSF_CrowdMeter")
 # Build up DB connection
 conn <- dbConnect(drv = RSQLite::SQLite(), dbname = "database")

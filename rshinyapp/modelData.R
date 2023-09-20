@@ -20,7 +20,7 @@ library(RSQLite)
 Sys.setenv(TZ='Asia/Taipei')
 # as.POSIXct(tz = "US/Pacific")
 #setwd("/Users/Andy 1/google_drive/Coding_Projects/RSF/repo")
-setwd("/home/pi/repo/NTU_GymCrowdMeter/")
+setwd("/home/boyie/repo/NTU_GymCrowdMeter/")
 #setwd("C:/Users/boyie/Programming/BerkeleyRSF_CrowdMeter")
 source("rshinyapp/functions.R")
 
