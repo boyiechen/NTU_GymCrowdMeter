@@ -32,7 +32,7 @@ df = db_manager.loadData()
 print(df.shape)
 
 ## scrape new data (in type of pandas df)
-scraper = scrapeData.scraper()
+scraper = scrapeData.Scraper()
 df_tmp = scraper.getCrowdMeterDF()
 print(df_tmp)
 
