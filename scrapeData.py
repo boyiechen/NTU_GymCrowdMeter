@@ -31,6 +31,7 @@ class scraper(object):
 
     def fetchCrowdMeterNow(self):
         res = requests.get(self.url)
+        print(res)
         count_dict = json.loads(res.text)
         count_dict = count_dict["CounterData"][0]
         current_count = int(count_dict['innerCount'].split(";")[0])
