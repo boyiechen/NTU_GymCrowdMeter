@@ -1,7 +1,12 @@
+rshinyapp/NTU_GYM/rsconnect/*
+rsconnect/*
+deploy.R
 *.ipynb_checkpoints
 *.Rhistory
+.RData
 config.py
-
+plot/*
+*tmp.csv
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
